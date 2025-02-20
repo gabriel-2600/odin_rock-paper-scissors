@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Rock, Paper, Scissors vs Computer</h1>
+    <h3>Reload to play again</h3>
+
+    <script>
+      function getComputerChoice() {
+        let computerChoice = Math.floor(Math.random() * 100) + 1;
+
+        if (computerChoice >= 66) {
+          return "rock";
+        } else if (computerChoice <= 33) {
+          return "paper";
+        } else {
+          return "scissors";
+        }
+      }
+
+      function getHumanChoice() {
+        let humanChoice = prompt("rock, paper or scissors?");
+        let humanChoiceLowerCase = humanChoice.toLowerCase();
+
+        if (
+          humanChoiceLowerCase !== "rock" &&
+          humanChoiceLowerCase !== "paper" &&
+          humanChoiceLowerCase !== "scissors"
+        ) {
+          console.log("invalid choice");
+          return getHumanChoice();
+        } else {
+          return humanChoiceLowerCase;
+        }
+      }
+
+      function playGame() {
+        let humanScore = 0;
+        let computerScore = 0;
+
+        function playRound(humanChoice, computerChoice) {
+          if (humanChoice === computerChoice) {
+            console.log(humanChoice + " to " + computerChoice + " is draw.");
+          } else if (humanChoice === "rock" && computerChoice === "scissors") {
+            humanScore++;
+            console.log(
+              humanChoice + " beats " + computerChoice + ", human wins!"
+            );
+          } else if (humanChoice === "paper" && computerChoice === "rock") {
+            humanScore++;
+            console.log(
+              humanChoice + " beats " + computerChoice + ", human wins!"
+            );
+          } else if (humanChoice === "scissors" && computerChoice === "paper") {
+            humanScore++;
+            console.log(
+              humanChoice + " beats " + computerChoice + ", human wins!"
+            );
+          } else {
+            computerScore++;
+            console.log(
+              computerChoice + " beats " + humanChoice + ", computer wins!"
+            );
+          }
+          console.log("Human: " + humanScore);
+          console.log("Computer: " + computerScore);
+          console.log("");
+        }
+
+        playRound(getHumanChoice(), getComputerChoice());
+        playRound(getHumanChoice(), getComputerChoice());
+        playRound(getHumanChoice(), getComputerChoice());
+        playRound(getHumanChoice(), getComputerChoice());
+        playRound(getHumanChoice(), getComputerChoice());
+      }
+
+      playGame();
+    </script>
+  </body>
+</html>
