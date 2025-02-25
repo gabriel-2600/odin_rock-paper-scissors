@@ -7,7 +7,13 @@
   </head>
   <body>
     <h1>Rock, Paper, Scissors vs Computer</h1>
-    <h3>Reload to play again</h3>
+    <h3>First to 5 wins!</h3>
+
+    <button id="rock">rock</button>
+    <button id="paper">paper</button>
+    <button id="scissors">scissors</button>
+
+    <div id="result-div"></div>
 
     <script>
       function getComputerChoice() {
@@ -22,60 +28,85 @@
         }
       }
 
-      function getHumanChoice() {
-        let humanChoice = prompt("rock, paper or scissors?");
-        let humanChoiceLowerCase = humanChoice.toLowerCase();
-
-        if (
-          humanChoiceLowerCase !== "rock" &&
-          humanChoiceLowerCase !== "paper" &&
-          humanChoiceLowerCase !== "scissors"
-        ) {
-          console.log("invalid choice");
-          return getHumanChoice();
-        } else {
-          return humanChoiceLowerCase;
-        }
-      }
-
       function playGame() {
         let humanScore = 0;
         let computerScore = 0;
 
+        const resultDiv = document.querySelector("#result-div");
+
+        const winnerParagraph = document.createElement("p");
+        resultDiv.appendChild(winnerParagraph);
+
+        const score = document.createElement("p");
+        resultDiv.appendChild(score);
+
+        const rockBtn = document.querySelector("#rock");
+        rockBtn.addEventListener("click", () => {
+          playRound("rock", getComputerChoice());
+        });
+
+        const paperBtn = document.querySelector("#paper");
+        paperBtn.addEventListener("click", () => {
+          playRound("paper", getComputerChoice());
+        });
+
+        const scissorsBtn = document.querySelector("#scissors");
+        scissorsBtn.addEventListener("click", () => {
+          playRound("scissors", getComputerChoice());
+        });
+
         function playRound(humanChoice, computerChoice) {
           if (humanChoice === computerChoice) {
-            console.log(humanChoice + " to " + computerChoice + " is draw.");
+            winnerParagraph.textContent =
+              humanChoice + " to " + computerChoice + " is draw.";
           } else if (humanChoice === "rock" && computerChoice === "scissors") {
             humanScore++;
-            console.log(
-              humanChoice + " beats " + computerChoice + ", human wins!"
-            );
+
+            winnerParagraph.textContent =
+              humanChoice +
+              " beats " +
+              computerChoice +
+              ", human wins the round!!";
           } else if (humanChoice === "paper" && computerChoice === "rock") {
             humanScore++;
-            console.log(
-              humanChoice + " beats " + computerChoice + ", human wins!"
-            );
+
+            winnerParagraph.textContent =
+              humanChoice +
+              " beats " +
+              computerChoice +
+              ", human wins the round!";
           } else if (humanChoice === "scissors" && computerChoice === "paper") {
             humanScore++;
-            console.log(
-              humanChoice + " beats " + computerChoice + ", human wins!"
-            );
+
+            winnerParagraph.textContent =
+              humanChoice +
+              " beats " +
+              computerChoice +
+              ", human wins the round!!";
           } else {
             computerScore++;
-            console.log(
-              computerChoice + " beats " + humanChoice + ", computer wins!"
-            );
-          }
-          console.log("Human: " + humanScore);
-          console.log("Computer: " + computerScore);
-          console.log("");
-        }
 
-        playRound(getHumanChoice(), getComputerChoice());
-        playRound(getHumanChoice(), getComputerChoice());
-        playRound(getHumanChoice(), getComputerChoice());
-        playRound(getHumanChoice(), getComputerChoice());
-        playRound(getHumanChoice(), getComputerChoice());
+            winnerParagraph.textContent =
+              computerChoice +
+              " beats " +
+              humanChoice +
+              ", computer wins the round!";
+          }
+
+          score.textContent = `Human: ${humanScore} || Computer: ${computerScore}`;
+
+          if (humanScore === 5) {
+            humanScore = 0;
+            computerScore = 0;
+
+            winnerParagraph.textContent = "Human wins the game!";
+          } else if (computerScore === 5) {
+            humanScore = 0;
+            computerScore = 0;
+
+            winnerParagraph.textContent = "Computer wins the game!";
+          }
+        }
       }
 
       playGame();
